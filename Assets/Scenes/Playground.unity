@@ -536,7 +536,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 36.470016, y: -44.683887, z: -9.554883}
+  m_LocalPosition: {x: 36.470016, y: -44.930885, z: -9.554883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -738,7 +738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &738951317
 Transform:
   m_ObjectHideFlags: 0
@@ -869,6 +869,7 @@ GameObject:
   - component: {fileID: 2011273896}
   - component: {fileID: 2011273892}
   - component: {fileID: 2011273898}
+  - component: {fileID: 2011273899}
   - component: {fileID: 2011273891}
   - component: {fileID: 2011273897}
   - component: {fileID: 2011273889}
@@ -7047,7 +7048,7 @@ Transform:
   m_GameObject: {fileID: 1312036105}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 36.470016, y: -44.683887, z: -9.554883}
+  m_LocalPosition: {x: 36.470016, y: -44.930885, z: -9.554883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7571,7 +7572,7 @@ Transform:
   m_GameObject: {fileID: 817729410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.05, y: -2.523, z: 0}
+  m_LocalPosition: {x: 19.05, y: -2.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7795,6 +7796,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5f12024bc024647a859363d6b60f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2011273899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817729410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70d417b229ab364daeda00d743299c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 10
 --- !u!1 &2043640393
 GameObject:
   m_ObjectHideFlags: 0

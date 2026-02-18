@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private FrameStruct _frameStruct;
 
     //private bool _isGrounded = false;
-    private Vector2 _movement;
+    private Movement _movement;
 
     private Rigidbody2D _rigidBody;
 
@@ -26,18 +26,15 @@ public class PlayerController : MonoBehaviour
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInputScript>();
-
+        _movement = GetComponent<Movement>();
     }
 
     private void Update()
     {
         GatherInput();
+        Movement();
         Jump();
         HandleSpriteFlip();
-    }
-
-    private void FixedUpdate() {
-        Move();
     }
 
     private bool CheckGrounded()
@@ -62,13 +59,10 @@ public class PlayerController : MonoBehaviour
         // _movement = new Vector2(moveX * _moveSpeed, _rigidBody.linearVelocity.y);
     
         _frameStruct = _playerInput.FrameStruct;
-        _movement = new Vector2(_frameStruct.Move.x * _moveSpeed, _rigidBody.linearVelocity.y);
-
     }
 
-    private void Move() {
-
-        _rigidBody.linearVelocity = new Vector2(_movement.x, _rigidBody.linearVelocityY);
+    private void Movement() {
+        _movement.SetDirection(_frameStruct.Move.x);
     }
 
     private void Jump()
