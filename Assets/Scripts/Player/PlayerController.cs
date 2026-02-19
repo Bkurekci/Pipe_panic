@@ -14,8 +14,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _extraGravity = 700f;
     [SerializeField] private float _gravityDelay = .5f;
+    [SerializeField] private float _coyoteTime = 0.5f;
     
-    private float _airTime;
+    private float _airTime, _coyoteTimer;
     private bool _doubleJumpAvaliable;
     private PlayerInputScript _playerInput;
     private FrameStruct _frameStruct;
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         GatherInput();
         Movement();
+        CoyoteTimer();
         HandleJump();
         HandleSpriteFlip();
         GravityDelay();
@@ -103,22 +105,32 @@ public class PlayerController : MonoBehaviour
     {
         if(!_frameStruct.Jump) {return;}
 
-        if (_doubleJumpAvaliable)
+        if (CheckGrounded() || _coyoteTimer > 0f)
+            OnJump?.Invoke();
+        else if (_doubleJumpAvaliable)
         {
             _doubleJumpAvaliable = false;
             OnJump?.Invoke();
-        }else if (CheckGrounded())
-        {
-            _doubleJumpAvaliable = true;
-            OnJump?.Invoke();
         }
         
+    }
+
+    private void CoyoteTimer()
+    {
+        if (CheckGrounded())
+        {
+            _coyoteTimer = _coyoteTime;
+            _doubleJumpAvaliable = true;
+        }
+        else
+            _coyoteTimer -= Time.deltaTime;
     }
 
     private void ApplyJumpForce()
     {
         _rigidBody.linearVelocity = Vector2.zero;
         _airTime = 0f;
+        _coyoteTimer = 0f;
         _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
