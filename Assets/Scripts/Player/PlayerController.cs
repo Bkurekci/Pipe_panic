@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
+    public static Action OnJump;
     public static PlayerController Instance;
 
     [SerializeField] private Transform _feetTransform;
@@ -17,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _gravityDelay = .5f;
     
     private float _airTime;
+    private bool _doubleJumpAvaliable;
     private PlayerInputScript _playerInput;
     private FrameStruct _frameStruct;
 
@@ -33,11 +33,21 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<Movement>();
     }
 
+    void OnEnable()
+    {
+        OnJump += ApplyJumpForce;
+    }
+
+    void OnDisable()
+    {
+        OnJump -= ApplyJumpForce;
+    }
+
     private void Update()
     {
         GatherInput();
         Movement();
-        Jump();
+        HandleJump();
         HandleSpriteFlip();
         GravityDelay();
     }
@@ -89,12 +99,27 @@ public class PlayerController : MonoBehaviour
         _movement.SetDirection(_frameStruct.Move.x);
     }
 
-    private void Jump()
+    private void HandleJump()
     {
         if(!_frameStruct.Jump) {return;}
-        if (CheckGrounded()) {
-            _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
+
+        if (_doubleJumpAvaliable)
+        {
+            _doubleJumpAvaliable = false;
+            OnJump?.Invoke();
+        }else if (CheckGrounded())
+        {
+            _doubleJumpAvaliable = true;
+            OnJump?.Invoke();
         }
+        
+    }
+
+    private void ApplyJumpForce()
+    {
+        _rigidBody.linearVelocity = Vector2.zero;
+        _airTime = 0f;
+        _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
     private void HandleSpriteFlip()
